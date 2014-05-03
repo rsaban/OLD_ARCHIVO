@@ -11,6 +11,7 @@
     <property name="resizable">False</property>
     <property name="window_position">center</property>
     <property name="icon">archivador2.ico</property>
+    <signal name="key-press-event" handler="on_clienteArchivo_key_press_event" swapped="no"/>
     <signal name="delete-event" handler="gtk_main_quit" swapped="no"/>
     <child>
       <object class="GtkLayout" id="layout1">

@@ -44,6 +44,7 @@ class main:
 				"on_rbPaOtro_clicked": self.rbPaOtroClick,
 				"on_rbPaMi_clicked": self.rbPaMiClick,
 				"on_msgbox_delete_event": self.msgboxDelete,
+				"on_clienteArchivo_key_press_event": self.ReturnPulse,
 				"gtk_main_quit": self.Salir
 				}
 		builder.connect_signals(dict)
@@ -186,6 +187,10 @@ class main:
 	def rbPaMiClick(self, widget):
 		self.tbPaOtro.set_sensitive(False)
 		self.tbPaOtro.set_text("")
+
+	def ReturnPulse(self, widget, event):
+		if event.keyval == gtk.keysyms.Return:
+			self.btSolicitarClick(widget)
 
 	def btAceptarMsgBoxClick(self, widget):
 		

@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"sOLI",
+				"Solicitante"
+			],
+			[
 				"fech",
 				"fechaHoy"
 			],
@@ -510,10 +514,6 @@
 			[
 				"tbdni",
 				"tbFechaRenoDNI"
-			],
-			[
-				"tbpas",
-				"tbPasFechaRenov"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "Solicitudes_de_Expediente.py",
 			"settings":
 			{
-				"buffer_size": 7988,
+				"buffer_size": 8002,
 				"line_ending": "Unix"
 			}
 		},
@@ -649,15 +649,15 @@
 					"file": "Solicitudes_de_Expediente.py",
 					"settings":
 					{
-						"buffer_size": 7988,
+						"buffer_size": 8002,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3184,
-								3184
+								2571,
+								2571
 							]
 						],
 						"settings":
@@ -666,7 +666,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 919.0,
+						"translation.y": 829.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
