@@ -157,12 +157,14 @@ class main:
 							self.btAceptarMsgBox.set_label("Siempre me pasa lo mismo!!")
 							return
 						else:
-
+							solicitador = getpass.getuser()
+							solicitante = solicitante + " (pedido por " + solicitador + ")"
 							querySolicitar = "INSERT INTO ExpedientesSolicitados (Expdte, Solicitante, Fecha, NecesitoHoy, Caja) VALUES (\'" + expdte + "', '" + solicitante + "', '" + str(fechaPedido) + "', '" + necesitoHoy + "', '" + caja + "')"
 
 							try:
 								cursor.execute(querySolicitar)
 								c.commit()
+								self.lbSolicitado.set_visible(True)
 								self.lbSolicitado.set_text("Último expediente solicitado: " + expdte)
 								self.tbExpdte.set_text("")
 								self.tbPaOtro.set_text("")

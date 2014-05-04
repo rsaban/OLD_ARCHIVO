@@ -81,7 +81,7 @@ class main:
 
 		if self.rbCualquierDia.get_active() == True:
 
-			queryConsultaSolicitudes = "SELECT Fecha, Expdte, Caja, Solicitante, NecesitoHoy, Id FROM ExpedientesSolicitados ORDER BY Caja,cast(Expdte as unsigned) ASC"#, Caja ASC" 
+			queryConsultaSolicitudes = "SELECT Fecha, Expdte, Caja, Solicitante, NecesitoHoy, Id FROM ExpedientesSolicitados ORDER BY cast(Expdte as unsigned),Caja ASC"#, Caja ASC" 
 
 			try:
 				cursor.execute(queryConsultaSolicitudes)
@@ -97,7 +97,7 @@ class main:
 			ano, mes, dia = self.calendar1.get_date()
 			fechaSolicitud = str(ano) + "-" + str(mes+1) + "-" + str(dia)
 
-			queryConsultaSolicitudes = "SELECT Fecha, Expdte, Caja, Solicitante, NecesitoHoy,  Id FROM ExpedientesSolicitados WHERE Fecha = \'" + str(fechaSolicitud) + "' ORDER BY Caja,cast(Expdte as unsigned) ASC"#, Caja ASC" 
+			queryConsultaSolicitudes = "SELECT Fecha, Expdte, Caja, Solicitante, NecesitoHoy,  Id FROM ExpedientesSolicitados WHERE Fecha = \'" + str(fechaSolicitud) + "' ORDER BY cast(Expdte as unsigned),Caja ASC"#, Caja ASC" 
 
 			try:
 				cursor.execute(queryConsultaSolicitudes)
