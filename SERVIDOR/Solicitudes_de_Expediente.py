@@ -55,6 +55,8 @@ class main:
 		dict = {"on_btMostrarRegistros_clicked": self.btMostrarRegistrosClick,
 				"on_btExportar_clicked": self.btExportarClick,
 				"on_btEliminar_clicked": self.btEliminarClick,
+				"on_btMarcar_clicked": self.btMarcarClick,
+				"on_btDesmarcar_clicked": self.btDesmarcarClick,
 				"on_btAceptarMsgBox_clicked": self.btAceptarMsgBoxClick,
 				"on_msgbox_delete_event": self.MsgBoxDelete,
 				"gtk_main_quit": self.Salir
@@ -81,7 +83,7 @@ class main:
 
 		if self.rbCualquierDia.get_active() == True:
 
-			queryConsultaSolicitudes = "SELECT Fecha, Expdte, Caja, Solicitante, NecesitoHoy, Id FROM ExpedientesSolicitados ORDER BY cast(Expdte as unsigned),Caja ASC"#, Caja ASC" 
+			queryConsultaSolicitudes = "SELECT Fecha, Expdte, Caja, Solicitante, NecesitoHoy, Id, Tramitando FROM ExpedientesSolicitados ORDER BY Solicitante,Caja ASC"#, Caja ASC"   cast(Expdte as unsigned)
 
 			try:
 				cursor.execute(queryConsultaSolicitudes)
@@ -97,7 +99,7 @@ class main:
 			ano, mes, dia = self.calendar1.get_date()
 			fechaSolicitud = str(ano) + "-" + str(mes+1) + "-" + str(dia)
 
-			queryConsultaSolicitudes = "SELECT Fecha, Expdte, Caja, Solicitante, NecesitoHoy,  Id FROM ExpedientesSolicitados WHERE Fecha = \'" + str(fechaSolicitud) + "' ORDER BY cast(Expdte as unsigned),Caja ASC"#, Caja ASC" 
+			queryConsultaSolicitudes = "SELECT Fecha, Expdte, Caja, Solicitante, NecesitoHoy,  Id, Tramitando FROM ExpedientesSolicitados WHERE Fecha = \'" + str(fechaSolicitud) + "' ORDER BY Solicitante,Caja ASC"#, Caja ASC" 
 
 			try:
 				cursor.execute(queryConsultaSolicitudes)
@@ -248,6 +250,71 @@ class main:
 			os.system("start soffice --calc Solicitudes_de_Expediente.ods &")
 
 		
+	def btMarcarClick(self, widget):
+		tree,iter = self.tvSolicitudes.get_selection().get_selected_rows()
+		
+		try:
+			c = MySQLdb.connect(*conexion.datos)
+		except Exception, e:
+			self.msgbox.show()
+			self.lbMsgBox.set_text("El servidor no está disponible. Intentelo más tarde.")
+			return
+		cursor = c.cursor()
+		
+		for i in iter: #esto funciona aquí, porque no voy eliminando filas del treeview. Por eso en el botón eliminar tuve que hacerlo distinto.
+			# expediente = tree.get_value(tree.get_iter(i), 1)
+			# persona = tree.get_value(tree.get_iter(i), 3)
+			# fecha = tree.get_value(tree.get_iter(i), 0)
+			# caja = tree.get_value(tree.get_iter(i), 2)
+			idE = tree.get_value(tree.get_iter(i), 5)
+			queryMarcar = "UPDATE ExpedientesSolicitados SET Tramitando =  \"Si\" WHERE Id = \'" + idE + "'" 
+
+			
+
+			try:
+				cursor.execute(queryMarcar)
+				c.commit()
+			except Exception, e:
+				c.rollback()
+	
+		cursor.close()
+		c.close()
+
+
+		self.btMostrarRegistrosClick(widget)
+
+	def btDesmarcarClick(self, widget):
+		tree,iter = self.tvSolicitudes.get_selection().get_selected_rows()
+		
+		try:
+			c = MySQLdb.connect(*conexion.datos)
+		except Exception, e:
+			self.msgbox.show()
+			self.lbMsgBox.set_text("El servidor no está disponible. Intentelo más tarde.")
+			return
+		cursor = c.cursor()
+		
+		for i in iter: #esto funciona aquí, porque no voy eliminando filas del treeview. Por eso en el botón eliminar tuve que hacerlo distinto.
+			# expediente = tree.get_value(tree.get_iter(i), 1)
+			# persona = tree.get_value(tree.get_iter(i), 3)
+			# fecha = tree.get_value(tree.get_iter(i), 0)
+			# caja = tree.get_value(tree.get_iter(i), 2)
+			idE = tree.get_value(tree.get_iter(i), 5)
+			queryMarcar = "UPDATE ExpedientesSolicitados SET Tramitando =  \"No\" WHERE Id = \'" + idE + "'" 
+
+			try:
+				cursor.execute(queryMarcar)
+				c.commit()
+			except Exception, e:
+				c.rollback()
+	
+		cursor.close()
+		c.close()
+
+
+		self.btMostrarRegistrosClick(widget)
+
+
 	def btAceptarMsgBoxClick(self, widget):
 		self.msgbox.hide()
 

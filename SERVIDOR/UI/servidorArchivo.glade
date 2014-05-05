@@ -16,6 +16,8 @@
       <column type="gchararray"/>
       <!-- column-name Id -->
       <column type="gchararray"/>
+      <!-- column-name Tramitando Retirada -->
+      <column type="gchararray"/>
     </columns>
   </object>
   <object class="GtkMessageDialog" id="msgbox">
@@ -79,7 +81,7 @@
   </object>
   <object class="GtkWindow" id="servidorArchivo">
     <property name="width_request">700</property>
-    <property name="height_request">600</property>
+    <property name="height_request">630</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Solicitudes de Expediente</property>
@@ -196,7 +198,7 @@ Registros</property>
         <child>
           <object class="GtkScrolledWindow" id="scrolledwindow1">
             <property name="width_request">660</property>
-            <property name="height_request">315</property>
+            <property name="height_request">325</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="hscrollbar_policy">automatic</property>
@@ -274,6 +276,17 @@ Registros</property>
                     </child>
                   </object>
                 </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="treeviewcolumn7">
+                    <property name="title" translatable="yes">Tramitando</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="cellrenderertext7"/>
+                      <attributes>
+                        <attribute name="text">6</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
@@ -295,7 +308,7 @@ Registros</property>
           </object>
           <packing>
             <property name="x">583</property>
-            <property name="y">550</property>
+            <property name="y">590</property>
           </packing>
         </child>
         <child>
@@ -311,12 +324,12 @@ Registros</property>
           </object>
           <packing>
             <property name="x">20</property>
-            <property name="y">550</property>
+            <property name="y">560</property>
           </packing>
         </child>
         <child>
           <object class="GtkEntry" id="tbComentario">
-            <property name="width_request">385</property>
+            <property name="width_request">311</property>
             <property name="height_request">25</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
@@ -329,7 +342,39 @@ Registros</property>
           </object>
           <packing>
             <property name="x">160</property>
-            <property name="y">550</property>
+            <property name="y">560</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btMarcar">
+            <property name="label" translatable="yes">Marcar</property>
+            <property name="width_request">100</property>
+            <property name="height_request">25</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="use_action_appearance">False</property>
+            <signal name="clicked" handler="on_btMarcar_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">478</property>
+            <property name="y">560</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btDesmarcar">
+            <property name="label" translatable="yes">Desmarcar</property>
+            <property name="width_request">100</property>
+            <property name="height_request">25</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="use_action_appearance">False</property>
+            <signal name="clicked" handler="on_btDesmarcar_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">583</property>
+            <property name="y">560</property>
           </packing>
         </child>
       </object>
