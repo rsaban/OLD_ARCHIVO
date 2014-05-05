@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 28-04-2014 a las 17:09:50
+-- Tiempo de generación: 05-05-2014 a las 22:39:14
 -- Versión del servidor: 5.5.37
 -- Versión de PHP: 5.3.10-1ubuntu3.11
 
@@ -33,8 +33,9 @@ CREATE TABLE IF NOT EXISTS `ExpedientesSolicitados` (
   `Fecha` date DEFAULT NULL,
   `NecesitoHoy` varchar(5) COLLATE utf8_spanish_ci DEFAULT NULL,
   `Caja` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Tramitando` varchar(2) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=61 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
