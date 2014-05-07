@@ -10,13 +10,15 @@
       <column type="gchararray"/>
       <!-- column-name Caja -->
       <column type="gchararray"/>
+      <!-- column-name Lugar -->
+      <column type="gchararray"/>
       <!-- column-name Solicitante -->
       <column type="gchararray"/>
       <!-- column-name NecesitoHoy -->
       <column type="gchararray"/>
-      <!-- column-name Id -->
+      <!-- column-name Tramitando -->
       <column type="gchararray"/>
-      <!-- column-name Tramitando Retirada -->
+      <!-- column-name Id -->
       <column type="gchararray"/>
     </columns>
   </object>
@@ -66,6 +68,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">label</property>
+            <property name="wrap">True</property>
           </object>
           <packing>
             <property name="expand">True</property>
@@ -243,12 +246,23 @@ Registros</property>
                   </object>
                 </child>
                 <child>
+                  <object class="GtkTreeViewColumn" id="treeviewcolumn8">
+                    <property name="title" translatable="yes">Lugar</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="cellrenderertext8"/>
+                      <attributes>
+                        <attribute name="text">3</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
                   <object class="GtkTreeViewColumn" id="treeviewcolumn3">
                     <property name="title" translatable="yes">Solicitante</property>
                     <child>
                       <object class="GtkCellRendererText" id="cellrenderertext3"/>
                       <attributes>
-                        <attribute name="text">3</attribute>
+                        <attribute name="text">4</attribute>
                       </attributes>
                     </child>
                   </object>
@@ -258,18 +272,6 @@ Registros</property>
                     <property name="title" translatable="yes">Necesito Hoy</property>
                     <child>
                       <object class="GtkCellRendererText" id="cellrenderertext5"/>
-                      <attributes>
-                        <attribute name="text">4</attribute>
-                      </attributes>
-                    </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkTreeViewColumn" id="treeviewcolumn4">
-                    <child>
-                      <object class="GtkCellRendererText" id="cellrenderertext4">
-                        <property name="visible">False</property>
-                      </object>
                       <attributes>
                         <attribute name="text">5</attribute>
                       </attributes>
@@ -283,6 +285,18 @@ Registros</property>
                       <object class="GtkCellRendererText" id="cellrenderertext7"/>
                       <attributes>
                         <attribute name="text">6</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="treeviewcolumn4">
+                    <child>
+                      <object class="GtkCellRendererText" id="cellrenderertext4">
+                        <property name="visible">False</property>
+                      </object>
+                      <attributes>
+                        <attribute name="text">7</attribute>
                       </attributes>
                     </child>
                   </object>

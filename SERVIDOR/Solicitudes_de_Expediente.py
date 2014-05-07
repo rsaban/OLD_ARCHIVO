@@ -83,7 +83,7 @@ class main:
 
 		if self.rbCualquierDia.get_active() == True:
 
-			queryConsultaSolicitudes = "SELECT Fecha, Expdte, Caja, Solicitante, NecesitoHoy, Id, Tramitando FROM ExpedientesSolicitados ORDER BY Solicitante,Caja ASC"#, Caja ASC"   cast(Expdte as unsigned)
+			queryConsultaSolicitudes = "SELECT Fecha, Expdte, Caja, Lugar, Solicitante, NecesitoHoy, Tramitando, Id FROM ExpedientesSolicitados ORDER BY Solicitante,cast(Caja as unsigned),Lugar ASC"#, Caja ASC"   cast(Expdte as unsigned)
 
 			try:
 				cursor.execute(queryConsultaSolicitudes)
@@ -99,7 +99,7 @@ class main:
 			ano, mes, dia = self.calendar1.get_date()
 			fechaSolicitud = str(ano) + "-" + str(mes+1) + "-" + str(dia)
 
-			queryConsultaSolicitudes = "SELECT Fecha, Expdte, Caja, Solicitante, NecesitoHoy,  Id, Tramitando FROM ExpedientesSolicitados WHERE Fecha = \'" + str(fechaSolicitud) + "' ORDER BY Solicitante,Caja ASC"#, Caja ASC" 
+			queryConsultaSolicitudes = "SELECT Fecha, Expdte, Caja, Lugar, Solicitante, NecesitoHoy, Tramitando, Id FROM ExpedientesSolicitados WHERE Fecha = \'" + str(fechaSolicitud) + "' ORDER BY Solicitante,cast(Caja as unsigned),Lugar ASC"#, Caja ASC" 
 
 			try:
 				cursor.execute(queryConsultaSolicitudes)
@@ -136,8 +136,8 @@ class main:
 
 			fecha = tree.get_value(tree.get_iter(iter[0]), 0)
 			expediente = tree.get_value(tree.get_iter(iter[0]), 1)
-			solicitado = tree.get_value(tree.get_iter(iter[0]), 3)
-			idSolicitud = tree.get_value(tree.get_iter(iter[0]), 5)
+			solicitado = tree.get_value(tree.get_iter(iter[0]), 4)
+			idSolicitud = tree.get_value(tree.get_iter(iter[0]), 7)
 			
 			f = open("log.txt", "a")
 			f.write ("Expediente " + expediente + ", solicitado por " + solicitado + " el " + fecha + ", entregado el " + str(hoy) + ". Comentario: " + comentario + "\n")
@@ -184,9 +184,10 @@ class main:
 			
 			for i in iter: #esto funciona aquí, porque no voy eliminando filas del treeview. Por eso en el botón eliminar tuve que hacerlo distinto.
 				expediente = tree.get_value(tree.get_iter(i), 1)
-				persona = tree.get_value(tree.get_iter(i), 3)
+				persona = tree.get_value(tree.get_iter(i), 4)
 				fecha = tree.get_value(tree.get_iter(i), 0)
 				caja = tree.get_value(tree.get_iter(i), 2)
+				lugar = tree.get_value(tree.get_iter(i), 3)
 				# Create a row (same as <tr> in HTML)
 				tr = TableRow()
 				table.addElement(tr)
@@ -197,6 +198,9 @@ class main:
 				cell4 = TableCell()
 				cell4.addElement(P(text=caja))
 				tr.addElement(cell4)
+				cell5 = TableCell()
+				cell5.addElement(P(text=lugar))
+				tr.addElement(cell5)
 				cell2 = TableCell()
 				cell2.addElement(P(text=persona))
 				tr.addElement(cell2)
@@ -219,9 +223,10 @@ class main:
 			
 			for i in iter: #esto funciona aquí, porque no voy eliminando filas del treeview. Por eso en el botón eliminar tuve que hacerlo distinto.
 				expediente = tree.get_value(tree.get_iter(i), 1)
-				persona = tree.get_value(tree.get_iter(i), 3)
+				persona = tree.get_value(tree.get_iter(i), 4)
 				fecha = tree.get_value(tree.get_iter(i), 0)
 				caja = tree.get_value(tree.get_iter(i), 2)
+				lugar = tree.get_value(tree.get_iter(i), 3)
 				# Create a row (same as <tr> in HTML)
 				tr = TableRow()
 				table.addElement(tr)
@@ -232,6 +237,9 @@ class main:
 				cell4 = TableCell()
 				cell4.addElement(P(text=caja))
 				tr.addElement(cell4)
+				cell5 = TableCell()
+				cell5.addElement(P(text=lugar))
+				tr.addElement(cell5)
 				cell2 = TableCell()
 				cell2.addElement(P(text=persona))
 				tr.addElement(cell2)
@@ -266,10 +274,8 @@ class main:
 			# persona = tree.get_value(tree.get_iter(i), 3)
 			# fecha = tree.get_value(tree.get_iter(i), 0)
 			# caja = tree.get_value(tree.get_iter(i), 2)
-			idE = tree.get_value(tree.get_iter(i), 5)
+			idE = tree.get_value(tree.get_iter(i), 7)
 			queryMarcar = "UPDATE ExpedientesSolicitados SET Tramitando =  \"Si\" WHERE Id = \'" + idE + "'" 
-
-			
 
 			try:
 				cursor.execute(queryMarcar)
@@ -299,8 +305,8 @@ class main:
 			# persona = tree.get_value(tree.get_iter(i), 3)
 			# fecha = tree.get_value(tree.get_iter(i), 0)
 			# caja = tree.get_value(tree.get_iter(i), 2)
-			idE = tree.get_value(tree.get_iter(i), 5)
-			queryMarcar = "UPDATE ExpedientesSolicitados SET Tramitando =  \"No\" WHERE Id = \'" + idE + "'" 
+			idE = tree.get_value(tree.get_iter(i), 7)
+			queryMarcar = "UPDATE ExpedientesSolicitados SET Tramitando =  \"\" WHERE Id = \'" + idE + "'" 
 
 			try:
 				cursor.execute(queryMarcar)

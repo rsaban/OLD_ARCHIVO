@@ -5,11 +5,15 @@
 		[
 			[
 				"set",
-				"set_visible"
+				"set_text"
 			],
 			[
 				"tb",
-				"tbExpdte"
+				"tbCaja"
+			],
+			[
+				"ch",
+				"ckbtSalaArchivo"
 			],
 			[
 				"get",
@@ -510,10 +514,6 @@
 			[
 				"tbpa",
 				"tbPasaporte"
-			],
-			[
-				"cbxt",
-				"cbxDNITipoDoc"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "Solicitar_Expediente.py",
 			"settings":
 			{
-				"buffer_size": 7099,
+				"buffer_size": 8733,
 				"line_ending": "Unix"
 			}
 		},
@@ -605,6 +605,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Acordarme",
 			"no puede se",
 			"Delete",
 			"delete",
@@ -649,15 +650,15 @@
 					"file": "Solicitar_Expediente.py",
 					"settings":
 					{
-						"buffer_size": 7099,
+						"buffer_size": 8733,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								130,
-								130
+								2920,
+								2920
 							]
 						],
 						"settings":

@@ -30,6 +30,8 @@ class main:
 		self.ckbtHoy = builder.get_object("ckbtHoy")
 		self.tbCaja = builder.get_object("tbCaja")
 		self.lbSolicitado = builder.get_object("lbSolicitado")
+		self.ckbtSalaArchivo = builder.get_object("ckbtSalaArchivo")
+		self.ckbtDefinitivo = builder.get_object("ckbtDefinitivo")
 
 		self.lbSolicitado.set_visible(False)
 
@@ -44,33 +46,51 @@ class main:
 				"on_rbPaOtro_clicked": self.rbPaOtroClick,
 				"on_rbPaMi_clicked": self.rbPaMiClick,
 				"on_msgbox_delete_event": self.msgboxDelete,
+				"on_ckbtSalaArchivo_toggled": self.ckbtSalaArchivoCheck,
+				"on_ckbtDefinitivo_toggled": self.ckbtDefinitivoCheck,
 				"on_clienteArchivo_key_press_event": self.ReturnPulse,
 				"gtk_main_quit": self.Salir
 				}
 		builder.connect_signals(dict)
 
 	
+	def ckbtSalaArchivoCheck(self, widget):
+		if self.ckbtSalaArchivo.get_active():
+			self.tbCaja.set_text("0")
+			self.ckbtDefinitivo.set_active(False)
+
+	def ckbtDefinitivoCheck(self, widget):
+		if self.ckbtDefinitivo.get_active():
+			self.tbCaja.set_text("0")
+			self.ckbtSalaArchivo.set_active(False)
+
 	def btSolicitarClick(self, widget):
 		
+		if self.tbCaja.get_text() != "0" and (self.ckbtSalaArchivo.get_active() or self.ckbtDefinitivo.get_active()):
+			self.msgbox.show()
+			self.lbMsgBox.set_text("Revisa la caja y el lugar, algo no me cuadra")
+			self.btAceptarMsgBox.set_label("Voy a intentarlo")
+			return
+
 		expdte = self.tbExpdte.get_text()
 
 		#if isinstance(expdte, int) == False:
 		if expdte.isdigit() == False:
 			self.msgbox.show()
 			self.lbMsgBox.set_text("Con el número central es suficiente")
-			self.btAceptarMsgBox.set_label("Intentaré Acordarme")
+			self.btAceptarMsgBox.set_label("Intentaré Recordarlo")
 			return
 		
 		if len(expdte) < 6:
 			self.msgbox.show()
 			self.lbMsgBox.set_text("6 carácteres mínimo. Olvidate de cuentos, los ceros a la izquierda SI cuentan!!!")
-			self.btAceptarMsgBox.set_label("Intentaré Acordarme")
+			self.btAceptarMsgBox.set_label("Intentaré Recordarlo")
 			return
 
 		if self.ckbtHoy.get_active() == True:
-			necesitoHoy = "Sí"
+			necesitoHoy = "Urgente"
 		else:
-			necesitoHoy = "No"
+			necesitoHoy = ""
 
 		caja = self.tbCaja.get_text()
 
@@ -79,12 +99,23 @@ class main:
 			self.lbMsgBox.set_text("Échame un cable y escribe el número de caja, vale?. Si no lo sabes, escribe \"0\" y me doy por enterado :-)")
 			self.btAceptarMsgBox.set_label("Voy a intentarlo")
 			return
+		elif caja.isdigit() == False:
+			self.msgbox.show()
+			self.lbMsgBox.set_text("Creo que eso no es un número de caja :-). Si no está en caja, sala de archivo o archivo definitivo, pideselo a la persona que lo tenga o al responsable del archivador en cuestión.")
+			self.btAceptarMsgBox.set_label("Intentaré Recordarlo")
+			return
 
-
+		if self.ckbtSalaArchivo.get_active():
+			lugar = "Sala Archivo"
+		elif self.ckbtDefinitivo.get_active():
+			lugar = "Archivo Definitivo"
+		else:
+			lugar = ""
+		
 		if expdte == "" or expdte.isspace() == True:
 			self.msgbox.show()
 			self.lbMsgBox.set_text("Si no escribes el número de expediente, ¿cómo lo vas a solicitar, alma de cántaro?")
-			self.btAceptarMsgBox.set_label("Intentaré Acordarme")
+			self.btAceptarMsgBox.set_label("Intentaré Recordarlo")
 			return
 		else:
 
@@ -119,7 +150,7 @@ class main:
 				if self.rbPaMi.get_active() == True:
 					solicitante = getpass.getuser()
 
-					querySolicitar = "INSERT INTO ExpedientesSolicitados (Expdte, Solicitante, Fecha, NecesitoHoy, Caja) VALUES (\'" + expdte + "', '" + solicitante + "', '" + str(fechaPedido) + "', '" + necesitoHoy + "', '" + caja + "')"
+					querySolicitar = "INSERT INTO ExpedientesSolicitados (Expdte, Solicitante, Fecha, NecesitoHoy, Caja, Lugar) VALUES (\'" + expdte + "', '" + solicitante + "', '" + str(fechaPedido) + "', '" + necesitoHoy + "', '" + caja + "', '" + lugar + "')"
 
 					try:
 						cursor.execute(querySolicitar)
@@ -130,6 +161,8 @@ class main:
 						self.tbPaOtro.set_text("")
 						self.tbCaja.set_text("")
 						self.ckbtHoy.set_active(False)
+						self.ckbtDefinitivo.set_active(False)
+						self.ckbtSalaArchivo.set_active(False)
 						# self.msgbox.show()
 						# self.lbMsgBox.set_text("Expediente Solicitado")
 						# self.btAceptarMsgBox.set_label("Aceptar")
@@ -159,7 +192,7 @@ class main:
 						else:
 							solicitador = getpass.getuser()
 							solicitante = solicitante + " (pedido por " + solicitador + ")"
-							querySolicitar = "INSERT INTO ExpedientesSolicitados (Expdte, Solicitante, Fecha, NecesitoHoy, Caja) VALUES (\'" + expdte + "', '" + solicitante + "', '" + str(fechaPedido) + "', '" + necesitoHoy + "', '" + caja + "')"
+							querySolicitar = "INSERT INTO ExpedientesSolicitados (Expdte, Solicitante, Fecha, NecesitoHoy, Caja, Lugar) VALUES (\'" + expdte + "', '" + solicitante + "', '" + str(fechaPedido) + "', '" + necesitoHoy + "', '" + caja + "', '" + lugar + "')"
 
 							try:
 								cursor.execute(querySolicitar)
@@ -170,6 +203,8 @@ class main:
 								self.tbPaOtro.set_text("")
 								self.tbCaja.set_text("")
 								self.ckbtHoy.set_active(False)
+								self.ckbtDefinitivo.set_active(False)
+								self.ckbtSalaArchivo.set_active(False)
 								# self.msgbox.show()
 								# self.lbMsgBox.set_text("Expediente Solicitado")
 								# self.btAceptarMsgBox.set_label("Aceptar")
@@ -196,7 +231,7 @@ class main:
 
 	def btAceptarMsgBoxClick(self, widget):
 		
-		if self.btAceptarMsgBox.get_label() == "Intentaré Acordarme" or self.btAceptarMsgBox.get_label() == "Voy a intentarlo" or self.btAceptarMsgBox.get_label() == "Siempre me pasa lo mismo!!":
+		if self.btAceptarMsgBox.get_label() == "Intentaré Recordarlo" or self.btAceptarMsgBox.get_label() == "Voy a intentarlo" or self.btAceptarMsgBox.get_label() == "Siempre me pasa lo mismo!!":
 			self.msgbox.hide()
 		elif self.btAceptarMsgBox.get_label() == "Aceptar":
 			self.msgbox.hide()
@@ -204,6 +239,8 @@ class main:
 			self.tbPaOtro.set_text("")
 			self.tbCaja.set_text("")
 			self.ckbtHoy.set_active(False)
+			self.ckbtDefinitivo.set_active(False)
+			self.ckbtSalaArchivo.set_active(False)
 
 	def msgboxDelete(self, widget, data=None):
 		self.msgbox.hide()

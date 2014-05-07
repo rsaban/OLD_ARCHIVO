@@ -523,7 +523,7 @@
 			"file": "Solicitudes_de_Expediente.py",
 			"settings":
 			{
-				"buffer_size": 10079,
+				"buffer_size": 10399,
 				"line_ending": "Unix"
 			}
 		},
@@ -649,15 +649,15 @@
 					"file": "Solicitudes_de_Expediente.py",
 					"settings":
 					{
-						"buffer_size": 10079,
+						"buffer_size": 10399,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3305,
-								3305
+								2783,
+								2783
 							]
 						],
 						"settings":
@@ -666,7 +666,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1150.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
